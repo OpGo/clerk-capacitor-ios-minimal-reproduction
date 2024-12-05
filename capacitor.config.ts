@@ -16,6 +16,9 @@ const config: CapacitorConfig = {
   android: {
     allowMixedContent: !PRODUCTION,
   },
+  ios: {
+    webContentsDebuggingEnabled: true
+  },
   server: {
     cleartext: !PRODUCTION,
   },
