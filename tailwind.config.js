@@ -1,0 +1,131 @@
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+    darkMode: ["class"],
+    content: [
+        './pages/**/*.{ts,tsx}',
+        './components/**/*.{ts,tsx}',
+        './app/**/*.{ts,tsx}',
+        './src/**/*.{ts,tsx}',
+    ],
+    safelist: [
+        'grid-cols-1',
+        'grid-cols-2',
+        'grid-cols-3',
+        'grid-cols-4',
+        'grid-cols-5',
+        'grid-cols-6',
+        'grid-cols-7',
+        'grid-cols-8',
+        'grid-cols-9',
+        'grid-cols-10',
+        'grid-cols-11',
+        'grid-cols-12',
+        'grid-cols-13',
+        'grid-cols-14',
+        'grid-cols-15',
+        'grid-cols-16',
+        'grid-cols-17',
+        'grid-cols-18',
+        'grid-cols-19',
+        'grid-cols-20',
+        'col-span-1',
+        'col-span-2',
+        'col-span-3',
+        'col-span-4',
+        'col-span-5',
+        'col-span-6',
+        'col-span-7',
+        'col-span-8',
+        'col-span-9',
+        'col-span-10',
+        'col-span-11',
+        'col-span-12',
+        'col-span-13',
+        'col-span-14',
+        'col-span-15',
+        'col-span-16',
+        'col-span-17',
+        'col-span-18',
+        'col-span-19',
+        'col-span-20',
+    ],
+    prefix: "",
+    theme: {
+        container: {
+            center: true,
+            padding: "2rem",
+            screens: {
+                "2xl": "1400px",
+            },
+        },
+        extend: {
+            gridTemplateColumns: {
+                '13': 'repeat(13, minmax(0, 1fr))',
+                '14': 'repeat(14, minmax(0, 1fr))',
+                '15': 'repeat(15, minmax(0, 1fr))',
+                '16': 'repeat(16, minmax(0, 1fr))',
+                '17': 'repeat(17, minmax(0, 1fr))',
+                '18': 'repeat(18, minmax(0, 1fr))',
+                '19': 'repeat(19, minmax(0, 1fr))',
+                '20': 'repeat(20, minmax(0, 1fr))',
+            },
+            colors: {
+                border: "hsl(var(--border))",
+                input: "hsl(var(--input))",
+                ring: "hsl(var(--ring))",
+                background: "hsl(var(--background))",
+                foreground: "hsl(var(--foreground))",
+                primary: {
+                    DEFAULT: "hsl(var(--primary))",
+                    foreground: "hsl(var(--primary-foreground))",
+                },
+                secondary: {
+                    DEFAULT: "hsl(var(--secondary))",
+                    foreground: "hsl(var(--secondary-foreground))",
+                },
+                destructive: {
+                    DEFAULT: "hsl(var(--destructive))",
+                    foreground: "hsl(var(--destructive-foreground))",
+                },
+                muted: {
+                    DEFAULT: "hsl(var(--muted))",
+                    foreground: "hsl(var(--muted-foreground))",
+                },
+                accent: {
+                    DEFAULT: "hsl(var(--accent))",
+                    foreground: "hsl(var(--accent-foreground))",
+                },
+                popover: {
+                    DEFAULT: "hsl(var(--popover))",
+                    foreground: "hsl(var(--popover-foreground))",
+                },
+                card: {
+                    DEFAULT: "hsl(var(--card))",
+                    foreground: "hsl(var(--card-foreground))",
+                },
+            },
+
+
+            borderRadius: {
+                lg: "var(--radius)",
+                md: "calc(var(--radius) - 2px)",
+                sm: "calc(var(--radius) - 4px)",
+            },
+            keyframes: {
+                "accordion-down": {
+                    from: {height: "0"},
+                    to: {height: "var(--radix-accordion-content-height)"},
+                },
+                "accordion-up": {
+                    from: {height: "var(--radix-accordion-content-height)"},
+                    to: {height: "0"},
+                },
+            },
+            animation: {
+                "accordion-down": "accordion-down 0.2s ease-out",
+                "accordion-up": "accordion-up 0.2s ease-out",
+            },
+        },
+    },
+    plugins: [require("tailwindcss-animate")],
+}

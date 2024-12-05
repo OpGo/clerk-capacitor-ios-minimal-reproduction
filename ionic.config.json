@@ -1,0 +1,7 @@
+{
+  "name": "clerk-capacitor-minimal-reproduction",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}
