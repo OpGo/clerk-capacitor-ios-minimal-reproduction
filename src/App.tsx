@@ -1,9 +1,12 @@
 import "./App.css"
 import { Helmet } from "react-helmet"
-import { IonRouterOutlet } from "@ionic/react"
+import { IonRouterOutlet, IonContent } from "@ionic/react"
 import { Redirect, Route } from "react-router"
 import { IonReactRouter } from "@ionic/react-router"
-import { ClerkProvider, SignedIn, SignedOut, SignIn, useAuth, useUser } from "@clerk/clerk-react"
+import { useAuth, useUser } from "@clerk/clerk-react"
+import SignInForm from "./SignIn"
+import SignUpForm from "./SignUp"
+import { HubClerkProvider } from "./ClerkProvider"
 
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
 
@@ -17,31 +20,37 @@ function App() {
             <Helmet>
                 <title>Example app</title>
             </Helmet>
-            <ClerkProvider publishableKey={PUBLISHABLE_KEY} afterSignOutUrl="/">
+            <HubClerkProvider>
                 <IonReactRouter>
                     <IonRouterOutlet>
                         <Route path="/login">
                             <Helmet>
                                 <title>Login - Example app</title>
                             </Helmet>
-                            <div className="text-center mt-8">If you are seeing this without a login screen, check the console</div>
-                            <div className={"flex w-full h-full justify-center items-center"}>
-                                <SignIn forceRedirectUrl={"/app/login-success"} />
-                            </div>
+                            <IonContent>
+                                <div className={"flex w-full h-full justify-center items-center"}>
+                                    <SignInForm />
+                                </div>
+                            </IonContent>
+                        </Route>
+
+                        <Route path="/register">
+                            <Helmet>
+                                <title>Register - Example app</title>
+                            </Helmet>
+                            <IonContent>
+                                <div className={"flex w-full h-full justify-center items-center"}>
+                                    <SignUpForm />
+                                </div>
+                            </IonContent>
                         </Route>
 
                         <Route path="/app/*">
-                            <>
-                                <SignedIn>
+                            <IonContent>
+                                <div className={"flex w-full h-full justify-center items-center"}>
                                     <AppContent />
-                                </SignedIn>
-                                <SignedOut>
-                                    <div className="text-center mt-8">If you are seeing this without a login screen, check the console</div>
-                                    <div className={"flex w-full justify-center h-full items-center"}>
-                                        <SignIn />
-                                    </div>
-                                </SignedOut>
-                            </>
+                                </div>
+                            </IonContent>
                         </Route>
 
                         <Route path="/not-found">Not found</Route>
@@ -49,20 +58,41 @@ function App() {
                         <Redirect exact from="/" to="/login" />
                     </IonRouterOutlet>
                 </IonReactRouter>
-            </ClerkProvider>
+            </HubClerkProvider>
         </>
     )
 }
 
 function AppContent() {
-    const { signOut } = useAuth()
+    const { isLoaded, isSignedIn, userId, signOut } = useAuth()
     const { user } = useUser()
-    const userName = `${user?.firstName ?? ""} ${user?.lastName ?? ""}`.trim()
 
-    return <>
-        <div>You are signed in as {userName}</div>
-        <button onClick={() => signOut()}>Sign out</button>
-    </>
+    if (!isLoaded) {
+        return <div>Loading...</div>
+    }
+
+    if (!isSignedIn) {
+        return <Redirect to="/login" />
+    }
+
+    const handleSignOut = async () => {
+        await signOut()
+        return <Redirect to="/login" />
+    }
+
+    return (
+        <div>
+            <Helmet>
+                <title>App - Example app</title>
+            </Helmet>
+            <div className="text-center mt-8">Welcome to the app</div>
+            <div className="text-center mt-8">User ID: {userId}</div>
+            <div className="text-center mt-8">Email: {user?.primaryEmailAddress?.emailAddress}</div>
+            <div className="text-center mt-8">
+                <button onClick={handleSignOut} className="signout-button">Sign Out</button>
+            </div>
+        </div>
+    )
 }
 
 export default App
